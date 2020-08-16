@@ -1,0 +1,38 @@
+version: '3'
+
+volumes:
+  local_postgres_data: {}
+  local_postgres_data_backups: {}
+
+services:
+  node: &node
+    build:
+      context: .
+      dockerfile: ./compose/local/node/Dockerfile
+    image: vivefit_local_user_service
+    depends_on:
+      - postgres
+    volumes:
+      - .:/app
+    env_file:
+      - ./.envs/.local/.node
+      - ./.envs/.local/.postgres
+    ports:
+      - '3000:3000'
+    command: ./compose/local/node/entrypoint.sh
+
+  postgres:
+    build:
+      context: .
+      dockerfile: ./compose/local/postgres/Dockerfile
+    image: vivefit_local_postgres
+    volumes:
+      - local_postgres_data:/var/lib/postgresql/data
+      - local_postgres_data_backups:/backups
+    env_file:
+      - ./.envs/.local/.postgres
+    ports:
+      - '5438:5432'
+
+  redis:
+    image: redis:5.0
