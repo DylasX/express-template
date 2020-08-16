@@ -10,7 +10,7 @@ const database = require('./models/index');
 const port = process.env.PORT || 3000;
 
 //Server routes
-const routes = require('./routes');
+const routes = require('./routes/api/user');
 //Database
 //Initial connection database
 database.sequelize
@@ -29,7 +29,7 @@ database.sequelize
             title: 'Swagger',
             version: '1.0.0',
           },
-          host: 'localhost:3000',
+          host: 'localhost:3001',
           basePath: '/api',
           produces: ['application/json', 'application/xml'],
           schemes: ['http'],
@@ -47,7 +47,7 @@ database.sequelize
     app.use(bodyparser.urlencoded({ extended: true }));
 
     //routes
-    routes.init(app);
+    app.use('/api', routes);
 
     //Initialize server
     app.listen(port, () => {

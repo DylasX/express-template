@@ -18,7 +18,7 @@ services:
       - ./.envs/.local/.node
       - ./.envs/.local/.postgres
     ports:
-      - '3000:3000'
+      - '3001:3001'
     command: ./compose/local/node/entrypoint.sh
 
   postgres:
