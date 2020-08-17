@@ -1,0 +1,4 @@
+REDIS_URL=xxxxx
+PORT=xxxx
+JWT_KEY=xxxxx
+NODE_ENV=xxxxx
